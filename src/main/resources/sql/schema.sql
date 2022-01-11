@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS user (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(40) NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    master_password VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS service_password (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    url VARCHAR(2083) NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE IF NOT EXISTS user_device (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    name VARCHAR(250) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
