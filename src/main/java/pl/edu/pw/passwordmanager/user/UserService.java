@@ -1,13 +1,9 @@
-package pl.edu.pw.passwordmanager.service;
+package pl.edu.pw.passwordmanager.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.passwordmanager.security.auth.UserRepository;
 import pl.edu.pw.passwordmanager.dto.UserRegistration;
 import pl.edu.pw.passwordmanager.exception.UserAlreadyExistsException;
 import pl.edu.pw.passwordmanager.model.User;

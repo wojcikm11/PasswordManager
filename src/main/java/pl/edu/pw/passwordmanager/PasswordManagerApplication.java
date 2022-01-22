@@ -3,8 +3,8 @@ package pl.edu.pw.passwordmanager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import pl.edu.pw.passwordmanager.add_password.ServicePasswordRepository;
-import pl.edu.pw.passwordmanager.security.auth.UserRepository;
+import pl.edu.pw.passwordmanager.passwords.ServicePasswordRepository;
+import pl.edu.pw.passwordmanager.user.UserRepository;
 import pl.edu.pw.passwordmanager.security.monitoring.DeviceRepository;
 
 @SpringBootApplication

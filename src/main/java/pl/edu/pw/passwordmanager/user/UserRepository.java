@@ -1,4 +1,4 @@
-package pl.edu.pw.passwordmanager.security.auth;
+package pl.edu.pw.passwordmanager.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

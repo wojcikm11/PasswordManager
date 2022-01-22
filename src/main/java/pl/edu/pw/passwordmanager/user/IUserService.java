@@ -1,4 +1,4 @@
-package pl.edu.pw.passwordmanager.service;
+package pl.edu.pw.passwordmanager.user;
 
 import org.springframework.security.core.AuthenticationException;
 import pl.edu.pw.passwordmanager.dto.UserRegistration;

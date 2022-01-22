@@ -5,16 +5,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.edu.pw.passwordmanager.dto.DecryptedPassword;
 import pl.edu.pw.passwordmanager.dto.ServicePasswordListItem;
 import pl.edu.pw.passwordmanager.dto.ShowPasswordRequest;
 import pl.edu.pw.passwordmanager.dto.UnverifiedDevice;
-import pl.edu.pw.passwordmanager.model.User;
 import pl.edu.pw.passwordmanager.security.auth.ApplicationUser;
 import pl.edu.pw.passwordmanager.security.monitoring.IDeviceService;
-import pl.edu.pw.passwordmanager.service.IServicePasswordService;
+import pl.edu.pw.passwordmanager.passwords.IServicePasswordService;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller

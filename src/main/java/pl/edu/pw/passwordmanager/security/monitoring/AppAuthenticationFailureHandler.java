@@ -6,12 +6,10 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import pl.edu.pw.passwordmanager.model.User;
-import pl.edu.pw.passwordmanager.service.IUserService;
-import pl.edu.pw.passwordmanager.service.UserService;
+import pl.edu.pw.passwordmanager.user.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static pl.edu.pw.passwordmanager.service.UserService.MAX_FAILED_LOGIN_ATTEMPTS;
+import static pl.edu.pw.passwordmanager.user.UserService.MAX_FAILED_LOGIN_ATTEMPTS;
 
 @Component
 public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {

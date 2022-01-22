@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import pl.edu.pw.passwordmanager.model.User;
 import pl.edu.pw.passwordmanager.security.auth.ApplicationUser;
-import pl.edu.pw.passwordmanager.service.IUserService;
+import pl.edu.pw.passwordmanager.user.IUserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

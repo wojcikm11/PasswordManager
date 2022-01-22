@@ -1,4 +1,4 @@
-package pl.edu.pw.passwordmanager.service;
+package pl.edu.pw.passwordmanager.passwords;
 
 import org.springframework.stereotype.Service;
 import pl.edu.pw.passwordmanager.dto.AddServicePassword;

@@ -1,4 +1,4 @@
-package pl.edu.pw.passwordmanager.add_password;
+package pl.edu.pw.passwordmanager.passwords;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

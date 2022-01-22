@@ -13,7 +13,7 @@ import pl.edu.pw.passwordmanager.dto.AddServicePassword;
 import pl.edu.pw.passwordmanager.dto.DecryptedPassword;
 import pl.edu.pw.passwordmanager.dto.ShowPasswordRequest;
 import pl.edu.pw.passwordmanager.exception.IncorrectMasterPasswordException;
-import pl.edu.pw.passwordmanager.service.IServicePasswordService;
+import pl.edu.pw.passwordmanager.passwords.IServicePasswordService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

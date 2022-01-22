@@ -2,7 +2,6 @@ package pl.edu.pw.passwordmanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.pw.passwordmanager.dto.UserRegistration;
 import pl.edu.pw.passwordmanager.exception.UserAlreadyExistsException;
-import pl.edu.pw.passwordmanager.service.IUserService;
-import pl.edu.pw.passwordmanager.service.UserService;
+import pl.edu.pw.passwordmanager.user.IUserService;
+import pl.edu.pw.passwordmanager.user.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

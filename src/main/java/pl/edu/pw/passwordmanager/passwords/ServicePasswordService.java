@@ -1,10 +1,9 @@
-package pl.edu.pw.passwordmanager.service;
+package pl.edu.pw.passwordmanager.passwords;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.passwordmanager.add_password.ServicePasswordRepository;
 import pl.edu.pw.passwordmanager.dto.AddServicePassword;
 import pl.edu.pw.passwordmanager.dto.DecryptedPassword;
 import pl.edu.pw.passwordmanager.dto.ServicePasswordListItem;
