@@ -38,6 +38,7 @@ public class UserService implements IUserService {
         }
 
         User user = map(userRegistration);
+        user.setAccountNonLocked(true);
         return userRepository.save(user);
     }
 

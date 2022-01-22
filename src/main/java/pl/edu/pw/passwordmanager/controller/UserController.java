@@ -1,6 +1,7 @@
 package pl.edu.pw.passwordmanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +55,9 @@ public class UserController {
 
         try {
             userService.register(userRegistration);
+            if (SecurityContextHolder.getContext().getAuthentication() != null) {
+                SecurityContextHolder.getContext().setAuthentication(null);
+            }
             request.login(userRegistration.getUsername(), userRegistration.getPassword());
         } catch (UserAlreadyExistsException | ServletException e) {
             model.addAttribute("errorMessage", e.getMessage());

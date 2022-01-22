@@ -74,6 +74,9 @@ public class ServicePasswordController {
     @GetMapping("/show_password")
     public String showGetPasswordForm(Model model) {
         DecryptedPassword decryptedPassword = (DecryptedPassword) model.asMap().get("decryptedPassword");
+        if (decryptedPassword == null) {
+            return "redirect:/dashboard";
+        }
         model.addAttribute("decryptedPassword", decryptedPassword);
         return "show-password";
     }

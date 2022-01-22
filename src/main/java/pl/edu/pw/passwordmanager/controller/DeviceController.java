@@ -19,9 +19,9 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @PostMapping("/verify_device")
-    public String setDeviceAsVerified(@ModelAttribute("unverifiedDevice") UnverifiedDevice unverifiedDevice) {
-        deviceService.setDeviceAsVerified(unverifiedDevice.getId());
-        return "redirect:/dashboard";
-    }
+//    @PostMapping("/verify_device")
+//    public String setDeviceAsVerified(@ModelAttribute("unverifiedDevice") UnverifiedDevice unverifiedDevice) {
+//        deviceService.setDeviceAsVerified(unverifiedDevice.getId());
+//        return "redirect:/dashboard";
+//    }
 }

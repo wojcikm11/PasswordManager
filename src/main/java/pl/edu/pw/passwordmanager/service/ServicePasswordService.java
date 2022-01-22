@@ -84,6 +84,10 @@ public class ServicePasswordService implements IServicePasswordService {
     public DecryptedPassword getDecryptedPassword(ShowPasswordRequest showPasswordRequest) {
         Optional<ServicePassword> servicePassword = servicePasswordRepository.findById(showPasswordRequest.getServicePasswordId());
 
+        if (servicePassword.isEmpty()) {
+            throw new RuntimeException("Could not find requested password");
+        }
+
         if (!validUser(showPasswordRequest, servicePassword)) {
             throw new InvalidUserException("You do not have permissions for this resource");
         }
@@ -100,9 +104,9 @@ public class ServicePasswordService implements IServicePasswordService {
                         String decryptedPassword = aesEncoder.decrypt(encryptedPassword, vaultKey, new IvParameterSpec(servicePasswordValue.getIv()));
                         return new DecryptedPassword(decryptedPassword, showPasswordRequest.getUrl());
                     } catch (Exception e) {
-                        throw new RuntimeException(e.getMessage());
+                        throw new RuntimeException("There was en error with decryption.");
                     }
-                })).orElseThrow(() ->  new RuntimeException("error"));
+                })).orElseThrow(() ->  new RuntimeException("Could not find given requested password"));
     }
 
     private boolean validUser(ShowPasswordRequest showPasswordRequest, Optional<ServicePassword> servicePassword) {
@@ -115,7 +119,6 @@ public class ServicePasswordService implements IServicePasswordService {
                 (servicePasswordValue) -> {
                     Long ownerId = servicePasswordValue.getUser().getId();
                     Long requestingUserId = applicationUser.getUser().getId();
-                    System.out.println(ownerId);
                     return ownerId.equals(requestingUserId);
                 }).get();
     }

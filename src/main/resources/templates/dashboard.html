@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Password Manager</title>
@@ -31,12 +31,17 @@
             margin-top: 20px;
         }
 
+        .username {
+            margin-right: 5px;
+        }
+
     </style>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary justify-content-between">
         <a class="navbar-brand">Password Manager</a>
         <form method="get" action="logout">
+            <span class="font-weight-bold username" sec:authentication="name"></span>
             <button type="submit" class="btn btn-light">Logout</button>
         </form>
     </nav>
@@ -45,13 +50,13 @@
         <div style="margin-top: 20px" th:each="unverifiedDevice: ${unverifiedDevices}">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <span>There has been log in to your account from unknown device: <span class="font-weight-bold" th:text="${unverifiedDevice.details}"></span> on <span class="font-weight-bold" th:text="${unverifiedDevice.lastLoggedIn}"></span><span>. If it was you,
-                 click Verify device button. If it wasn't you, change your password immediately.</span></span>
-                <form th:action="@{/verify_device}" th:object="${unverifiedDevice}" method="POST">
-                    <input type="hidden" th:value="${unverifiedDevice.id}" th:attr="name='id'" class="form-control"  required="">
-                    <input type="hidden" th:value="${unverifiedDevice.details}" th:attr="name='details'" class="form-control"  required="">
-                    <input type="hidden" th:value="${unverifiedDevice.lastLoggedIn}" th:attr="name='lastLoggedIn'" class="form-control"  required="">
-                    <button class="btn btn-warning btn-sm" type="submit">Verify device</button>
-                </form>
+                 ignore this message. If it wasn't you, change your password immediately.</span></span>
+<!--                <form th:action="@{/verify_device}" th:object="${unverifiedDevice}" method="POST">-->
+<!--                    <input type="hidden" th:value="${unverifiedDevice.id}" th:attr="name='id'" class="form-control"  required="">-->
+<!--                    <input type="hidden" th:value="${unverifiedDevice.details}" th:attr="name='details'" class="form-control"  required="">-->
+<!--                    <input type="hidden" th:value="${unverifiedDevice.lastLoggedIn}" th:attr="name='lastLoggedIn'" class="form-control"  required="">-->
+<!--                    <button class="btn btn-warning btn-sm" type="submit">Verify device</button>-->
+<!--                </form>-->
 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
