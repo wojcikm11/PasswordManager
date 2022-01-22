@@ -15,6 +15,7 @@ import pl.edu.pw.passwordmanager.exception.UserAlreadyExistsException;
 import pl.edu.pw.passwordmanager.service.IUserService;
 import pl.edu.pw.passwordmanager.service.UserService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -31,9 +32,9 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginView(@RequestParam Optional<String> error, Model model) {
-        if (error.isPresent()) {
-            model.addAttribute("errorMessage", "Incorrent username or password, try again");
-        }
+//        if (error.isPresent()) {
+//            model.addAttribute("errorMessage", "Incorrent username or password, try again");
+//        }
         return "login";
     }
 
@@ -53,11 +54,12 @@ public class UserController {
 
         try {
             userService.register(userRegistration);
-        } catch (UserAlreadyExistsException e) {
+            request.login(userRegistration.getUsername(), userRegistration.getPassword());
+        } catch (UserAlreadyExistsException | ServletException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "register-form";
         }
 
-        return "redirect:/login";
+        return "redirect:/dashboard";
     }
 }

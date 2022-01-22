@@ -2,6 +2,9 @@ package pl.edu.pw.passwordmanager.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.passwordmanager.security.auth.UserRepository;
@@ -10,10 +13,14 @@ import pl.edu.pw.passwordmanager.exception.UserAlreadyExistsException;
 import pl.edu.pw.passwordmanager.model.User;
 
 import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService implements IUserService {
+    public static final int MAX_FAILED_LOGIN_ATTEMPTS = 5;
+    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,6 +39,45 @@ public class UserService implements IUserService {
 
         User user = map(userRegistration);
         return userRepository.save(user);
+    }
+
+    @Override
+    public void unlockUser(User user) {
+        user.setAccountNonLocked(true);
+        user.setLockTime(null);
+        user.setFailedLoginAttempts(0);
+        userRepository.save(user);
+    }
+
+    @Override
+    public boolean lockTimeExpired(User user) {
+        long lockTime = user.getLockTime().getTime();
+        long currentTime = System.currentTimeMillis();
+        return lockTime + LOCK_TIME_DURATION < currentTime;
+    }
+
+    @Override
+    public void lockUser(User user) {
+        user.setAccountNonLocked(false);
+        user.setLockTime(new Date());
+        userRepository.save(user);
+    }
+
+    @Override
+    public void increaseFailedAttempts(User user) {
+        int increasedFailedAttempts = user.getFailedLoginAttempts() + 1;
+        userRepository.updateFailedAttempts(increasedFailedAttempts, user.getId());
+    }
+
+    @Override
+    public Optional<User> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void resetFailedAttempts(User user) {
+        int resetFailedAttempts = 0;
+        userRepository.updateFailedAttempts(resetFailedAttempts, user.getId());
     }
 
     private boolean usernameExists(String username) {

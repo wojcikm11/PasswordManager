@@ -11,8 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pl.edu.pw.passwordmanager.security.auth.ApplicationUserService;
+import pl.edu.pw.passwordmanager.security.monitoring.AppAuthenticationFailureHandler;
+import pl.edu.pw.passwordmanager.security.monitoring.AppAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -21,12 +25,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
+    private final AuthenticationSuccessHandler appAuthenticationSuccessHandler;
+    private final AuthenticationFailureHandler appAuthenticationFailureHandler;
 
     @Autowired
     public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
-                                     ApplicationUserService applicationUserService) {
-        this.passwordEncoder = new BCryptPasswordEncoder();
+                                     ApplicationUserService applicationUserService, AppAuthenticationSuccessHandler appAuthenticationSuccessHandler,
+                                     AppAuthenticationFailureHandler appAuthenticationFailureHandler) {
+        this.passwordEncoder = passwordEncoder;
         this.applicationUserService = applicationUserService;
+        this.appAuthenticationSuccessHandler = appAuthenticationSuccessHandler;
+        this.appAuthenticationFailureHandler = appAuthenticationFailureHandler;
     }
 
     @Override
@@ -34,11 +43,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/", "index", "/css/*", "/js/*", "/login", "/register").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/dashboard", true)
+                .successHandler(appAuthenticationSuccessHandler)
+                .failureHandler(appAuthenticationFailureHandler)
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()
@@ -48,7 +59,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/");
     }
 
     @Override

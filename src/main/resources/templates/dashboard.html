@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Password Manager</title>
@@ -41,29 +41,44 @@
         </form>
     </nav>
     <div class="container">
-        <form class="form-signin" th:action="@{/password}" method="post">
-            <button id="add-password" type="button" class="btn btn-primary">
+        <div style="margin-top: 20px" th:if="${showPasswordErrorMessage != null}" th:text="${showPasswordErrorMessage}" class="alert alert-danger" role="alert"></div>
+        <div style="margin-top: 20px" th:each="unverifiedDevice: ${unverifiedDevices}">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span>There has been log in to your account from unknown device: <span class="font-weight-bold" th:text="${unverifiedDevice.details}"></span> on <span class="font-weight-bold" th:text="${unverifiedDevice.lastLoggedIn}"></span><span>. If it was you,
+                 click Verify device button. If it wasn't you, change your password immediately.</span></span>
+                <form th:action="@{/verify_device}" th:object="${unverifiedDevice}" method="POST">
+                    <input type="hidden" th:value="${unverifiedDevice.id}" th:attr="name='id'" class="form-control"  required="">
+                    <input type="hidden" th:value="${unverifiedDevice.details}" th:attr="name='details'" class="form-control"  required="">
+                    <input type="hidden" th:value="${unverifiedDevice.lastLoggedIn}" th:attr="name='lastLoggedIn'" class="form-control"  required="">
+                    <button class="btn btn-warning btn-sm" type="submit">Verify device</button>
+                </form>
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <form class="form-signin" th:action="@{/add_password}" method="get">
+            <button id="add-password" type="submit" class="btn btn-primary">
                 Add password
             </button>
         </form>
         <table class="table table-striped top-buffer">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">URL</th>
                 <th scope="col">Password</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td><a href="https://www.facebook.com">https://www.facebook.com</a></td>
-                <td>Otto</td>
-                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <tr th:each="passwordEntry: ${servicePasswordList}" th:attr="id=${'passwordModal' + passwordEntry.id}">
+                <td><a th:href="${passwordEntry.url}"><span th:text="${passwordEntry.url}"/></a></td>
+                <td><span th:text="'**********'"/></td>
+                <td><button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target=${'#passwordModal'+passwordEntry.id}" data-row="${passwordEntry}">
                     Show password
                 </button></td>
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade" th:attr="id=${'passwordModal' + passwordEntry.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -73,9 +88,10 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form th:action="@{/masterpassword}" class="form-signin" method="POST">
-                                    <input type="password" id="masterpassword" name="masterpassword" class="form-control" placeholder="Master password" required=""
-                                           autofocus="">
+                                <form th:action="@{/show_password}" th:object="${showPasswordRequest}" class="form-signin" method="POST">
+                                    <input type="hidden" th:value="${passwordEntry.id}" th:attr="name='servicePasswordId'" id="showPasswordRequest" class="form-control"  required="">
+                                    <input type="hidden" th:value="${passwordEntry.url}" th:attr="name='url'" id="url" class="form-control"  required="">
+                                    <input type="password" th:field="*{masterPassword}" id="masterpassword" class="form-control" placeholder="Master password" required="">
                                     <button class="btn btn-lg btn-primary btn-block" type="submit">Show password</button>
                                 </form>
                             </div>
@@ -86,20 +102,19 @@
                         </div>
                     </div>
                 </div>
-
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td><button type="button" class="btn btn-primary">Show password</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td><button type="button" class="btn btn-primary">Show password</button></td>
-            </tr>
+<!--            <tr>-->
+<!--                <th scope="row">2</th>-->
+<!--                <td>Jacob</td>-->
+<!--                <td>Thornton</td>-->
+<!--                <td><button type="button" class="btn btn-primary">Show password</button></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th scope="row">3</th>-->
+<!--                <td>Larry</td>-->
+<!--                <td>the Bird</td>-->
+<!--                <td><button type="button" class="btn btn-primary">Show password</button></td>-->
+<!--            </tr>-->
             </tbody>
         </table>
     </div>

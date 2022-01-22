@@ -13,9 +13,22 @@ public class AddServicePassword {
     @NotEmpty
     private String password;
 
+    @NotNull
+    @NotEmpty
+    private String masterPassword;
+
+    public AddServicePassword() {
+    }
+
     public AddServicePassword(String url, String password) {
         this.url = url;
         this.password = password;
+    }
+
+    public AddServicePassword(String url, String password, String masterPassword) {
+        this.url = url;
+        this.password = password;
+        this.masterPassword = masterPassword;
     }
 
     public String getUrl() {
@@ -32,5 +45,13 @@ public class AddServicePassword {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMasterPassword() {
+        return masterPassword;
+    }
+
+    public void setMasterPassword(String masterPassword) {
+        this.masterPassword = masterPassword;
     }
 }

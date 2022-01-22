@@ -2,6 +2,7 @@ package pl.edu.pw.passwordmanager.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,13 +20,20 @@ public class User {
     @Column(name = "master_password")
     private String masterPassword;
 
+    private int failedLoginAttempts;
+
+    @Column(name = "not_locked")
+    private boolean isAccountNonLocked;
+
+    private Date lockTime;
+
     @OneToMany(mappedBy = "user",
                 cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<ServicePassword> servicePasswordList;
 
     @OneToMany(mappedBy = "user",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<UserDevice> userDevices;
+    private List<Device> devices;
 
     public User(String username, String password, String masterPassword) {
         this.username = username;
@@ -45,12 +53,12 @@ public class User {
         servicePassword.setUser(this);
     }
 
-    public void addDevice(UserDevice userDevice) {
-        if (userDevice == null) {
-            userDevices = new ArrayList<>();
+    public void addDevice(Device device) {
+        if (device == null) {
+            devices = new ArrayList<>();
         }
-        userDevices.add(userDevice);
-        userDevice.setUser(this);
+        devices.add(device);
+        device.setUser(this);
     }
 
     public Long getId() {
@@ -93,11 +101,43 @@ public class User {
         this.servicePasswordList = servicePasswordList;
     }
 
-    public List<UserDevice> getUserDevices() {
-        return userDevices;
+    public List<Device> getUserDevices() {
+        return devices;
     }
 
-    public void setUserDevices(List<UserDevice> userDevices) {
-        this.userDevices = userDevices;
+    public void setUserDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+
+    public Date getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
     }
 }

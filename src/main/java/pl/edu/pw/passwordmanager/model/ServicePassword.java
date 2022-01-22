@@ -8,21 +8,47 @@ import java.util.List;
 public class ServicePassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String url;
 
     private String password;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private byte[] iv;
+
+    private String salt;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="user_id")
     private User user;
 
-    public int getId() {
+    public ServicePassword() {
+    }
+
+    public ServicePassword(String url, String password) {
+        this.url = url;
+        this.password = password;
+    }
+
+    public ServicePassword(String url, String password, User user) {
+        this.url = url;
+        this.password = password;
+        this.user = user;
+    }
+
+    public ServicePassword(String url, String password, User user, byte[] iv, String salt) {
+        this.url = url;
+        this.password = password;
+        this.user = user;
+        this.iv = iv;
+        this.salt = salt;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,5 +74,21 @@ public class ServicePassword {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public byte[] getIv() {
+        return iv;
+    }
+
+    public void setIv(byte[] iv) {
+        this.iv = iv;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
