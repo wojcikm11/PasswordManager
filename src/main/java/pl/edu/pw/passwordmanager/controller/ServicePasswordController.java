@@ -38,13 +38,14 @@ public class ServicePasswordController {
 
     @PostMapping("/add_password")
     public String addServicePassword(@ModelAttribute("servicePassword") @Valid AddServicePassword addServicePassword, BindingResult result,
-                                     Principal principal, HttpServletRequest request, Errors errors, Model model) {
+                                      Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "add-password-form";
         }
 
         try {
             passwordService.addPassword(addServicePassword);
+            attributes.addFlashAttribute("passwordAddSuccessMessage", "New password has been successfully added.");
         } catch (IncorrectMasterPasswordException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "add-password-form";
@@ -59,11 +60,16 @@ public class ServicePasswordController {
     @PostMapping("/show_password")
     public String sendMasterPassword(@ModelAttribute("showPasswordRequest") @Valid ShowPasswordRequest showPasswordRequest, BindingResult result, Model model,
                                      RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("showPasswordErrorMessage", "Input data is incorrect");
+            return "redirect:/dashboard";
+        }
+
         DecryptedPassword decryptedPassword;
         try {
             decryptedPassword = passwordService.getDecryptedPassword(showPasswordRequest);
             attributes.addFlashAttribute("decryptedPassword", decryptedPassword);
-        } catch (IncorrectMasterPasswordException e) {
+        } catch (RuntimeException e) {
             attributes.addFlashAttribute("showPasswordErrorMessage", e.getMessage());
             return "redirect:/dashboard";
         }

@@ -3,32 +3,38 @@ package pl.edu.pw.passwordmanager.dto;
 import pl.edu.pw.passwordmanager.security.validation.FieldMatch;
 import pl.edu.pw.passwordmanager.security.validation.ValidPassword;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "confirmationPassword", message = "The password fields must match"),
     @FieldMatch(first = "masterPassword", second = "confirmationMasterPassword", message = "The master password fields must match")
 })
 public class UserRegistration {
-    @NotNull
+    @NotBlank
     @NotEmpty
+    @Pattern(message="Username cannot contain special characters", regexp = "[a-zA-Z0-9 ]+")
+    @Size(min = 3, max = 40, message = "Username must be from 3 to 40 characters long")
     private String username;
 
-    @ValidPassword(message = "Password must be at least 8 digits long, must contain 1 digit, " +
+    @ValidPassword(message = "Password must be at least 8 characters long and up to 30 characters long, must contain 1 digit, " +
             "1 upper case letter, 1 lower case letter and 1 special character")
-    @NotNull
+    @NotBlank
     private String password;
 
-    @NotNull
+    @NotBlank
+    @NotEmpty
     private String confirmationPassword;
 
-    @ValidPassword(message = "Master password must be at least 8 digits long, must contain 1 digit, " +
+    @ValidPassword(message = "Master password must be at least 8 characters long and up to 30 characters long, must contain 1 digit, " +
             "1 upper case letter, 1 lower case letter and 1 special character")
-    @NotNull
+    @NotBlank
     private String masterPassword;
 
-    @NotNull
+    @NotBlank
+    @NotEmpty
     private String confirmationMasterPassword;
 
     public String getUsername() {

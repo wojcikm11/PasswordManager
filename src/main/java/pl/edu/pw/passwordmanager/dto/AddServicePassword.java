@@ -1,19 +1,23 @@
 package pl.edu.pw.passwordmanager.dto;
 
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AddServicePassword {
 
-    @NotNull
+    @NotBlank
     @NotEmpty
+    @URL
     private String url;
 
-    @NotNull
+    @NotBlank
     @NotEmpty
     private String password;
 
-    @NotNull
+    @NotBlank
     @NotEmpty
     private String masterPassword;
 

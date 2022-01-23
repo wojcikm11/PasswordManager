@@ -46,6 +46,7 @@
         </form>
     </nav>
     <div class="container">
+        <div style="margin-top: 20px" th:if="${passwordAddSuccessMessage != null}" th:text="${passwordAddSuccessMessage}" class="alert alert-success" role="alert"></div>
         <div style="margin-top: 20px" th:if="${showPasswordErrorMessage != null}" th:text="${showPasswordErrorMessage}" class="alert alert-danger" role="alert"></div>
         <div style="margin-top: 20px" th:each="unverifiedDevice: ${unverifiedDevices}">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">

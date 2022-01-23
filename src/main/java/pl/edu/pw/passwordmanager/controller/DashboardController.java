@@ -37,6 +37,8 @@ public class DashboardController {
         model.addAttribute("showPasswordErrorMessage", showPasswordErrorMessage);
         List<UnverifiedDevice> unverifiedDevices = deviceService.findAllUnverifiedDevices(applicationUser.getUser().getId());
         model.addAttribute("unverifiedDevices", unverifiedDevices);
+        String passwordAddSuccessMessage = (String) model.asMap().get("passwordAddSuccessMessage");
+        model.addAttribute("passwordAddSuccessMessage", passwordAddSuccessMessage);
         return "dashboard";
     }
 }

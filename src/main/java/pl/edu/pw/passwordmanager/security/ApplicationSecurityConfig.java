@@ -59,7 +59,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .headers()
+                .xssProtection();
+//                .and()
+//                .contentSecurityPolicy("script-src 'self' https://code.jquery.com/jquery-3.3.1.slim.min.js; object-src 'self' https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js; object-src 'self' https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js; object-src 'self'");
     }
 
     @Override

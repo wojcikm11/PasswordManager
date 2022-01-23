@@ -23,12 +23,10 @@ import static pl.edu.pw.passwordmanager.user.UserService.MAX_FAILED_LOGIN_ATTEMP
 public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private static final String LOGIN_FAILED_URL = "/login?error";
     private IUserService userService;
-    private RedirectStrategy redirectStrategy;
 
     @Autowired
     public AppAuthenticationFailureHandler(IUserService userService) {
         this.userService = userService;
-        this.redirectStrategy = new DefaultRedirectStrategy();
     }
 
     @Override
@@ -52,6 +50,8 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
                     exception = new LockedException("Your account has been unlocked. Please try to login again.");
                 }
             }
+        } else {
+            exception = new BadCredentialsException("Incorrect username or password, try again.");
         }
         super.setDefaultFailureUrl(LOGIN_FAILED_URL);
         super.onAuthenticationFailure(request, response, exception);

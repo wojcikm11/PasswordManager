@@ -59,7 +59,7 @@ public class ServicePasswordService implements IServicePasswordService {
             throw new IncorrectMasterPasswordException("Incorrect master password");
         }
         try {
-            String encryptServicePassword = getEncryptServicePassword(addPassword);
+            String encryptServicePassword = encryptServicePassword(addPassword);
             addPassword.setPassword(encryptServicePassword);
         } catch (Exception e) {
             throw new RuntimeException("There was an error with password encryption.");
@@ -68,7 +68,7 @@ public class ServicePasswordService implements IServicePasswordService {
     }
 
 
-    private String getEncryptServicePassword(AddServicePassword addPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    private String encryptServicePassword(AddServicePassword addPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         String salt = aesEncoder.generateRandomSalt();
         encryptSalt = salt;
         SecretKey vaultKey = aesEncoder.getVaultKeyFromPassword(addPassword.getMasterPassword(), salt);

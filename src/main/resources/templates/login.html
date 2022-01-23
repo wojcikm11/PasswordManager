@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login - Password Manager</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
     <style>
 
@@ -27,7 +27,7 @@
         </p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         <p>Not have an account yet? <a th:href="@{/register}">Sign Up!</a></p>
-        <div style="margin-top: 20px" th:if="${param.error}" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}" class="alert alert-danger" role="alert"></div>
+        <div style="margin-top: 20px" th:if="${param.error} and ${session.SPRING_SECURITY_LAST_EXCEPTION != null}" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}" class="alert alert-danger" role="alert"></div>
     </form>
 </div>
 </body>

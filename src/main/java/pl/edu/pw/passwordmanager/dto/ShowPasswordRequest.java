@@ -1,8 +1,23 @@
 package pl.edu.pw.passwordmanager.dto;
 
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ShowPasswordRequest {
+
+    @NotNull
     private Long servicePasswordId;
+
+    @NotBlank
+    @NotEmpty
     private String masterPassword;
+
+    @NotBlank
+    @NotEmpty
+    @URL(message = "Invalid URL format")
     private String url;
 
     public ShowPasswordRequest(Long servicePasswordId, String masterPassword, String url) {
