@@ -19,7 +19,7 @@ public class UserRegistration {
     @Size(min = 3, max = 40, message = "Username must be from 3 to 40 characters long")
     private String username;
 
-    @ValidPassword(message = "Password must from 10 to 30 characters long, must contain 1 digit, " +
+    @ValidPassword(message = "Password must be from 10 to 30 characters long, must contain 1 digit, " +
             "1 upper case letter, 1 lower case letter and 1 special character")
     @NotBlank
     private String password;
