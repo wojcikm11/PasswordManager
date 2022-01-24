@@ -2,6 +2,7 @@ package pl.edu.pw.passwordmanager.dto;
 
 import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,8 @@ public class ShowPasswordRequest {
 
     @NotBlank
     @NotEmpty
-    @URL(message = "Invalid URL format")
+    @URL
+    @Max(value = 2083, message = "Too long URL address")
     private String url;
 
     public ShowPasswordRequest(Long servicePasswordId, String masterPassword, String url) {
