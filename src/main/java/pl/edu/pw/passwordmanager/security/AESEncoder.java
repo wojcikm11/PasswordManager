@@ -31,7 +31,7 @@ public class AESEncoder {
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 300000, 256);
         SecretKey vaultKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
         return vaultKey;
     }
@@ -59,7 +59,6 @@ public class AESEncoder {
 
     public String decrypt(String cipherText, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
-
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, key, iv);
         byte[] plainText = cipher.doFinal(new Base64().decode(cipherText));

@@ -1,7 +1,6 @@
 package pl.edu.pw.passwordmanager.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,22 +42,6 @@ public class User {
 
     public User() {
 
-    }
-
-    public void addServicePassword(ServicePassword servicePassword) {
-        if (servicePasswordList == null) {
-            servicePasswordList = new ArrayList<>();
-        }
-        servicePasswordList.add(servicePassword);
-        servicePassword.setUser(this);
-    }
-
-    public void addDevice(Device device) {
-        if (device == null) {
-            devices = new ArrayList<>();
-        }
-        devices.add(device);
-        device.setUser(this);
     }
 
     public Long getId() {

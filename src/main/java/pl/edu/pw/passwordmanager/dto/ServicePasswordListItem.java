@@ -1,7 +1,17 @@
 package pl.edu.pw.passwordmanager.dto;
 
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class ServicePasswordListItem {
+
+    @NotNull
     private Long id;
+
+    @URL
+    @NotBlank
     private String url;
 
     public ServicePasswordListItem(Long id, String url) {

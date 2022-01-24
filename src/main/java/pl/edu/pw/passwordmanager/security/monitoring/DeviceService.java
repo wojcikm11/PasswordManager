@@ -2,15 +2,11 @@ package pl.edu.pw.passwordmanager.security.monitoring;
 
 
 import com.blueconic.browscap.*;
-import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.passwordmanager.dto.UnverifiedDevice;
 import pl.edu.pw.passwordmanager.model.Device;
 import pl.edu.pw.passwordmanager.security.auth.ApplicationUser;
-import ua_parser.Client;
-import ua_parser.Parser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -19,7 +15,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -69,7 +64,6 @@ public class DeviceService implements IDeviceService {
     }
 
     private String getDeviceDetails(String header) {
-        String deviceDetails = null;
         Capabilities capabilities = parser.parse(header);
         if (capabilities == null) {
             return null;

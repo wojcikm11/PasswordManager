@@ -30,7 +30,7 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         loginNotification(authentication, request);
         resetFailedAttempts(authentication);
         redirect(request, response);

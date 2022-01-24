@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +14,7 @@ import pl.edu.pw.passwordmanager.dto.ShowPasswordRequest;
 import pl.edu.pw.passwordmanager.exception.IncorrectMasterPasswordException;
 import pl.edu.pw.passwordmanager.passwords.IServicePasswordService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 public class ServicePasswordController {
@@ -58,7 +55,7 @@ public class ServicePasswordController {
     }
 
     @PostMapping("/show_password")
-    public String sendMasterPassword(@ModelAttribute("showPasswordRequest") @Valid ShowPasswordRequest showPasswordRequest, BindingResult result, Model model,
+    public String sendMasterPassword(@ModelAttribute("showPasswordRequest") @Valid ShowPasswordRequest showPasswordRequest, BindingResult result,
                                      RedirectAttributes attributes) {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("showPasswordErrorMessage", "Input data is incorrect");

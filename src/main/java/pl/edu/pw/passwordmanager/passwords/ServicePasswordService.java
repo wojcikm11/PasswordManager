@@ -67,7 +67,6 @@ public class ServicePasswordService implements IServicePasswordService {
         return servicePasswordRepository.save(map(addPassword, encryptIv, encryptSalt));
     }
 
-
     private String encryptServicePassword(AddServicePassword addPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         String salt = aesEncoder.generateRandomSalt();
         encryptSalt = salt;
@@ -87,7 +86,7 @@ public class ServicePasswordService implements IServicePasswordService {
             throw new RuntimeException("Could not find requested password");
         }
 
-        if (!validUser(showPasswordRequest, servicePassword)) {
+        if (!validUser(servicePassword)) {
             throw new InvalidUserException("You do not have permissions for this resource");
         }
 
@@ -103,14 +102,13 @@ public class ServicePasswordService implements IServicePasswordService {
                         String decryptedPassword = aesEncoder.decrypt(encryptedPassword, vaultKey, new IvParameterSpec(servicePasswordValue.getIv()));
                         return new DecryptedPassword(decryptedPassword, showPasswordRequest.getUrl());
                     } catch (Exception e) {
-                        throw new RuntimeException("There was en error with decryption.");
+                        throw new RuntimeException("Something went wrong");
                     }
-                })).orElseThrow(() ->  new RuntimeException("Could not find given requested password"));
+                })).orElseThrow(() ->  new RuntimeException("Could not find requested password"));
     }
 
-    private boolean validUser(ShowPasswordRequest showPasswordRequest, Optional<ServicePassword> servicePassword) {
+    private boolean validUser(Optional<ServicePassword> servicePassword) {
         ApplicationUser applicationUser = getApplicationUser();
-        System.out.println(applicationUser.getUser().getId());
         if (servicePassword.isEmpty()) {
             return true;
         }

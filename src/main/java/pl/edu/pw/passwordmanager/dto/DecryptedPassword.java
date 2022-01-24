@@ -1,7 +1,16 @@
 package pl.edu.pw.passwordmanager.dto;
 
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotBlank;
+
 public class DecryptedPassword {
+
+    @NotBlank
     public String password;
+
+    @URL
+    @NotBlank
     public String url;
 
     public DecryptedPassword(String password, String url) {

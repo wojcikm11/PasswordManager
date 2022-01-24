@@ -2,19 +2,19 @@ package pl.edu.pw.passwordmanager.dto;
 
 import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 public class AddServicePassword {
 
     @NotBlank
     @NotEmpty
     @URL
+    @Max(value = 2083, message = "Too long URL address")
     private String url;
 
     @NotBlank
     @NotEmpty
+    @Max(value = 200, message = "Password to store can be up to 200 characters long")
     private String password;
 
     @NotBlank

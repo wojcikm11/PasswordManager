@@ -1,7 +1,6 @@
 package pl.edu.pw.passwordmanager.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "service_password")

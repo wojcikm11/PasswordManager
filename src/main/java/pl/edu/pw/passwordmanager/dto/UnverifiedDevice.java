@@ -1,10 +1,18 @@
 package pl.edu.pw.passwordmanager.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class UnverifiedDevice {
+
+    @NotNull
     private Long id;
+
+    @NotBlank
     private String details;
+
+    @NotBlank
     private String lastLoggedIn;
 
     public UnverifiedDevice(Long id, String details, String lastLoggedIn) {

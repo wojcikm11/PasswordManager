@@ -32,9 +32,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginView(@RequestParam Optional<String> error, Model model) {
-//        if (error.isPresent()) {
-//            model.addAttribute("errorMessage", "Incorrent username or password, try again");
-//        }
         return "login";
     }
 
@@ -47,7 +44,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistration userRegistration, BindingResult result,
-                                      HttpServletRequest request, Errors errors, Model model) {
+                                      HttpServletRequest request, Model model) {
         if (result.hasErrors()) {
             return "register-form";
         }

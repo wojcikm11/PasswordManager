@@ -1,6 +1,5 @@
 package pl.edu.pw.passwordmanager.passwords;
 
-import org.springframework.stereotype.Service;
 import pl.edu.pw.passwordmanager.dto.AddServicePassword;
 import pl.edu.pw.passwordmanager.dto.DecryptedPassword;
 import pl.edu.pw.passwordmanager.dto.ServicePasswordListItem;
