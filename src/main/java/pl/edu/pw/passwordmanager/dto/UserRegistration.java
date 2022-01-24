@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class UserRegistration {
     @NotBlank
     @NotEmpty
-    @Pattern(message="Username cannot contain special characters", regexp = "[a-zA-Z0-9 ]+")
+    @Pattern(message="Username can only contain alphanumeric characters", regexp = "[a-zA-Z0-9 ]+")
     @Size(min = 3, max = 40, message = "Username must be from 3 to 40 characters long")
     private String username;
 

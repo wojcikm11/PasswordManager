@@ -9,12 +9,12 @@ public class AddServicePassword {
     @NotBlank
     @NotEmpty
     @URL
-    @Max(value = 2083, message = "Too long URL address")
+    @Size(max = 2083, message = "Too long URL address")
     private String url;
 
     @NotBlank
     @NotEmpty
-    @Max(value = 200, message = "Password to store can be up to 200 characters long")
+    @Size(max = 200, message = "Password to store can be up to 200 characters long")
     private String password;
 
     @NotBlank
